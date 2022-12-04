@@ -42,18 +42,19 @@ class LifeAlign extends JFrame
           int number = Integer.parseInt(item)+1;
           JTable table = new JTable(number,4);
           JButton btn = new JButton("\"LifeAlign\"");
-          table.setValueAt("Task To Be Completed",0,0);
-          table.setValueAt("Starting Time",0,1);
-          table.setValueAt("Total Time taken",0,2);
-          table.setValueAt("Priority",0,3);
+          table.setValueAt("Enter Tasks",0,0);
+          table.setValueAt("Start Time",0,1);
+          table.setValueAt("Duration",0,2);
+          table.setValueAt("Set Priority",0,3);
+
           for(int i=1; i<number; i++)
           {
               table.setValueAt("P"+index,i,0); // set each process initial identity(process number)
-              table.setValueAt(0,i,3);         //set 0 for each cell of priority
+              table.setValueAt(0,i,3); // set 0 for each cell of priority
               index++;
           }
       
-          ActionListener btnActionListener = new ActionListener() // start LifeAlign after user click "Next" button
+          ActionListener btnActionListener = new ActionListener() // start LifeAlign after user click "LifeAlign" button
           {
               public void actionPerformed(ActionEvent e)
               {
