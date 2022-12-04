@@ -266,7 +266,7 @@ class LifeAlign extends JFrame
   {
       return finishTime;
   }
-  
+
   public int getSumTurn(ArrayList<LifeAlign> result1)  
   {
      int sumTurnaround=0;
@@ -276,11 +276,7 @@ class LifeAlign extends JFrame
      }     
      return sumTurnaround;
   }
-  
-  /**
-   * Calculate total waiting time
-   * 
-   */
+
   public int getSumWait(ArrayList<LifeAlign> result2) 
   {
      int sumWaiting=0;
@@ -291,10 +287,6 @@ class LifeAlign extends JFrame
      return sumWaiting;
   }
   
-  /**
-   * Calculate average turnaround time
-   * 
-   */
   public float getAvgTurn(ArrayList<LifeAlign> result3, int num) 
   {
       float sumT = getSumTurn(result3);
@@ -303,10 +295,6 @@ class LifeAlign extends JFrame
       return avgTurn;
   }
   
-  /**
-   * 
-   * Calculate average waiting time
-   */
   public float getAvgWait(ArrayList<LifeAlign> result4, int num) 
   {
       float sumW = getSumWait(result4);
@@ -443,161 +431,6 @@ class LifeAlign extends JFrame
      return newProcess;
   }
   
-  
-   /**
-   * Get non premptive SJF LifeAlign result
-   * 
-   * parameter:
-   * totalProcess == number of process user want
-   * initialProcess == input that user enter for each process
-   */
-  public ArrayList<LifeAlign> getNonSJF(int totalProcess, ArrayList<LifeAlign>initialProcess2) 
-  {
-      int processNum = totalProcess;
-      int process_arrive_Time;
-      int process_burst_Time;
-      ArrayList<LifeAlign> process = new ArrayList<LifeAlign>(); // process without LifeAlign
-      ArrayList<LifeAlign> temp = new ArrayList<LifeAlign>(); // final arragement of process after LifeAlign(result)
-      process = initialProcess2;
-      int st=0, tot=0; // st means service time and tot means determine how many process has completed
-      float totalwt=0, totalta=0;
-      while(true){
-            int min=99,c=processNum; // min means to find the minimum burst time and c means to find the specific process 
-            if (tot==processNum) // if completed process is same as total number of process then exit loop
-                break;
-            
-            for (int i=0;i<processNum;i++)
-            {
-                if ((process.get(i).getArriveTime()<=st) && (process.get(i).getStatus()==false) && (process.get(i).getBurstTime()<min))
-                {   
-                    min=process.get(i).getBurstTime();
-                    c=i;
-                }
-            }
-            
-            if (c==processNum) // if c is not updated increase service time 
-                st++;
-            else
-            {
-                process.get(c).setFinishTime(st+process.get(c).getBurstTime());
-                st=st+process.get(c).getBurstTime();
-                process.get(c).setTurnaround(process.get(c).getFinishTime()-process.get(c).getArriveTime());
-                process.get(c).setWaiting(process.get(c).getTurnaround()-process.get(c).getBurstTime());
-                process.get(c).setStatus(true);
-                tot++;  
-                temp.add(process.get(c));               
-            }
-        }
-        
-        return temp;
-  }
-  
-   /**
-   * Get premptive SJF LifeAlign result
-   * 
-   * parameter:
-   * totalProcess == number of process user want
-   * initialProcess == input that user enter for each process
-   */
-  public ArrayList<LifeAlign> getPSJF(int totalProcess, ArrayList<LifeAlign> initialProcess3) 
-  {
-      int processNum;
-      int process_arrive_Time;
-      int process_burst_Time;
-      ArrayList<LifeAlign> process = new ArrayList<LifeAlign>(); // process without LifeAlign
-      ArrayList<LifeAlign> temp2 = new ArrayList<LifeAlign>(); // final arragement of process after LifeAlign(result)
-      process = initialProcess3;
-      processNum = totalProcess;
-      int st=0, tot=0; // st means service time and tot means determine how many process has completed
-      float totalwt=0, totalta=0;
-      int store_c = 0;
-      int burst_Time_temp[] = new int[processNum];
-      int j = processNum;
-      int index=0;
-      boolean isrun = false; // flag that turn true when any process is successfully running
-      for(LifeAlign i: process)
-      {
-          burst_Time_temp[index] = i.getBurstTime();
-          index++;
-      }
-      
-      while(true){
-            int min=99,c=processNum; // min means to find the minimum burst time and c means to find the specific process 
-            if (tot==processNum) // if completed process is same as total number of process then exit loop
-                break;
-            
-            if(isrun == false){
-                for (int i=0;i<processNum;++i)
-                {
-                    if ((process.get(i).getArriveTime()<=st) && (process.get(i).getStatus()==false) && (process.get(i).getBurstTime()<min))
-                    {   
-                        min=process.get(i).getBurstTime();
-                        c=i;
-                    }
-                }
-            }
-            else{
-                for (int i=0;i<processNum;++i)
-                {
-                    if ((process.get(i).getArriveTime()<=st) && (process.get(i).getStatus()==false) && (process.get(i).getBurstTime()<min))
-                    {   
-                        if(process.get(store_c).getBurstTime()==process.get(i).getBurstTime()){
-                            int min_at = process.get(store_c).getArriveTime();
-                            if(min_at<process.get(i).getArriveTime()){
-                                min=process.get(store_c).getBurstTime();
-                                c=store_c;
-                            }else{
-                                min=process.get(i).getBurstTime();
-                                c=i;
-                            }
-                        }else{
-                            min=process.get(i).getBurstTime();
-                            c=i;
-                        }
-                        
-                    }
-                }
-            }
-            
-            if (c==processNum) // if c is not updated increase service time 
-                st++;
-            else
-            {
-                if(c!=store_c && process.get(store_c).getBurstTime()!=0 && isrun == true)
-                {
-                    int k = store_c + 1;
-                    process.add(new LifeAlign("P" + k,process.get(store_c).getArriveTime(),process.get(store_c).getBurstTime(),0,false));
-                    process.get(j).setFinishTime(st);
-                    temp2.add(process.get(j));
-                    j = j + 1;
-                }
-                process.get(c).setBurstTime(process.get(c).getBurstTime()-1);
-                st++;
-                store_c = c;
-                isrun = true;
-                if(process.get(c).getBurstTime()==0)
-                {
-                    process.get(c).setFinishTime(st);
-                    process.get(c).setStatus(true);
-                    tot++;
-                    temp2.add(process.get(c));   
-                }               
-            }
-        }
-        
-        for(int i=0;i<processNum;i++)
-        {
-            process.get(i).setTurnaround(process.get(i).getFinishTime()-process.get(i).getArriveTime());
-            process.get(i).setWaiting(process.get(i).getTurnaround()-burst_Time_temp[i]);
-        
-        }
-         
-        return temp2;
-  }
-  
-  /**
-   * This is a main for this class
-   */
   public static void main(String args[])
   {
       new LifeAlign();
