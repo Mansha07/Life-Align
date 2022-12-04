@@ -75,11 +75,11 @@ class LifeAlign extends JFrame
                      initialProcess.add(new LifeAlign(id,at,bt,pt,false));
                      initialProcess2.add(new LifeAlign(id,at,bt,pt,false));
                      initialProcess3.add(new LifeAlign(id,at,bt,pt,false));
-                    }catch(NullPointerException ext)  //if user enter null value, remine him/her
+                    }catch(NullPointerException ext)  //if user enter null value, throw the error
                     {
                         JDialog dialog = new JDialog(frame2,"Error!");
                         JPanel errorPanel = new JPanel();
-                        JLabel errorMessage = new JLabel("Error: Null Input,please check again");
+                        JLabel errorMessage = new JLabel("No Input, please check again");
                         errorPanel.add(errorMessage);
                         dialog.add(errorPanel);
                         dialog.setSize(350,100);
@@ -88,9 +88,10 @@ class LifeAlign extends JFrame
                         break;
                     }
                   }
-                  priorityResult = getPriority(number-1,initialProcess); //call the function to calculate non premptive priority LifeAlign
+
+                  priorityResult = getPriority(number-1,initialProcess); // call the function to calculate non preemptive priority scheduling
                   JFrame frame3 = new JFrame("Result");      
-                  JTable ganttChart1 = new JTable(2,priorityResult.size()+1);   // create table for show result after LifeAlign
+                  JTable ganttChart1 = new JTable(2,priorityResult.size()+1);   // create table for show result after scheduling
                   int rol=0;
                   int col=0;
                   for(int i=0; i<priorityResult.size(); i++) //loop to set the values of each cells in gantt chart(priority and non SJF)
