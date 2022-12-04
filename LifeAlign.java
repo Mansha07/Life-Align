@@ -2,13 +2,8 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
-
-
-
-
-class Scheduling extends JFrame
+class LifeAlign extends JFrame
 {
   private int arriveTime;  
   private int burstTime;
@@ -17,13 +12,9 @@ class Scheduling extends JFrame
   private int turnaround;
   private int waiting;
   private int finishTime;  //process finish scheduling time
-  private boolean status;  //to know that process been shceduling already or not
+  private boolean status;  //to know that process been scheduling already or not
    
-  /**
-   * This is a constructor that use to insert each process initial value.
-   * 
-   */
-  public Scheduling(String input1,int input2, int input3, int input4, boolean input5 )
+  public LifeAlign(String input1,int input2, int input3, int input4, boolean input5 )
   {
       identity = input1;
       setArriveTime(input2);
@@ -31,14 +22,8 @@ class Scheduling extends JFrame
       setPriority(input4);
       setStatus(input5);
   }
-  
-  /**
-   * 
-   * This is a Graphic User Interface(GUI)
-   * User choose how many process he/she want and the program will show result after scheduling and calculation
-   * 
-   */
-  public Scheduling()
+
+  public LifeAlign()
   {
      JFrame frame = new JFrame("Operating System Assignment");
      String[] choice = {"3","4","5","6","7","8","9","10"};
@@ -67,15 +52,15 @@ class Scheduling extends JFrame
               index++;
           }
       
-          ActionListener btnActionListener = new ActionListener() // start scheduling after user click "Next" button
+          ActionListener btnActionListener = new ActionListener() // start LifeAlign after user click "Next" button
           {
               public void actionPerformed(ActionEvent e)
               {
-                  ArrayList<Scheduling> initialProcess = new ArrayList<Scheduling>();
-                  ArrayList<Scheduling> initialProcess2 = new ArrayList<Scheduling>();
-                  ArrayList<Scheduling> initialProcess3 = new ArrayList<Scheduling>();
-                  ArrayList<Scheduling> priorityResult = new ArrayList<Scheduling>();
-                  for(int i=1; i<number; i++) //Retrieve each value in the table and put into arrayList<Scheduling>
+                  ArrayList<LifeAlign> initialProcess = new ArrayList<LifeAlign>();
+                  ArrayList<LifeAlign> initialProcess2 = new ArrayList<LifeAlign>();
+                  ArrayList<LifeAlign> initialProcess3 = new ArrayList<LifeAlign>();
+                  ArrayList<LifeAlign> priorityResult = new ArrayList<LifeAlign>();
+                  for(int i=1; i<number; i++) //Retrieve each value in the table and put into arrayList<LifeAlign>
                   {
                      String id = (String)table.getValueAt(i,0);
                      Object l = table.getValueAt(i,1);
@@ -85,9 +70,9 @@ class Scheduling extends JFrame
                      int at = Integer.parseInt(l.toString());
                      int bt = Integer.parseInt(k.toString());
                      int pt = Integer.parseInt(j.toString());
-                     initialProcess.add(new Scheduling(id,at,bt,pt,false));
-                     initialProcess2.add(new Scheduling(id,at,bt,pt,false));
-                     initialProcess3.add(new Scheduling(id,at,bt,pt,false));
+                     initialProcess.add(new LifeAlign(id,at,bt,pt,false));
+                     initialProcess2.add(new LifeAlign(id,at,bt,pt,false));
+                     initialProcess3.add(new LifeAlign(id,at,bt,pt,false));
                     }catch(NullPointerException ext)  //if user enter null value, remine him/her
                     {
                         JDialog dialog = new JDialog(frame2,"Error!");
@@ -101,9 +86,9 @@ class Scheduling extends JFrame
                         break;
                     }
                   }
-                  priorityResult = getPriority(number-1,initialProcess); //call the function to calculate non premptive priority scheduling
+                  priorityResult = getPriority(number-1,initialProcess); //call the function to calculate non premptive priority LifeAlign
                   JFrame frame3 = new JFrame("Result");      
-                  JTable ganttChart1 = new JTable(2,priorityResult.size()+1);   // create table for show result after scheduling
+                  JTable ganttChart1 = new JTable(2,priorityResult.size()+1);   // create table for show result after LifeAlign
                   int rol=0;
                   int col=0;
                   for(int i=0; i<priorityResult.size(); i++) //loop to set the values of each cells in gantt chart(priority and non SJF)
@@ -132,7 +117,7 @@ class Scheduling extends JFrame
                   
                   HashMap<String,String> eachProcessTurn = new HashMap<String,String>(); 
                   HashMap<String,String> eachProcessWait = new HashMap<String,String>();
-                  for(Scheduling xx: priorityResult) //Store Waiting time and turnaround time of each process(non premptive priority) 
+                  for(LifeAlign xx: priorityResult) //Store Waiting time and turnaround time of each process(non premptive priority) 
                   {
                       eachProcessTurn.put(xx.getIdentity(),String.valueOf(xx.getTurnaround()));
                       eachProcessWait.put(xx.getIdentity(),String.valueOf(xx.getWaiting()));
@@ -140,10 +125,10 @@ class Scheduling extends JFrame
                   
                   HashMap<String,String> eachProcessTurn2 = new HashMap<String,String>();
                   HashMap<String,String> eachProcessWait2 = new HashMap<String,String>();
-                  ArrayList<Scheduling> check = new ArrayList<Scheduling>();
+                  ArrayList<LifeAlign> check = new ArrayList<LifeAlign>();
                  
                   
-                  for(Scheduling xx: check) //Store Waiting time and turnaround time of each process(premptive SJF)
+                  for(LifeAlign xx: check) //Store Waiting time and turnaround time of each process(premptive SJF)
                   {
                       eachProcessTurn2.put(xx.getIdentity(),String.valueOf(xx.getTurnaround()));
                       eachProcessWait2.put(xx.getIdentity(),String.valueOf(xx.getWaiting()));
@@ -166,13 +151,13 @@ class Scheduling extends JFrame
                   JPanel board2 = new JPanel(new BorderLayout());
                   JPanel board3 = new JPanel(new BorderLayout());
                   JButton calculate = new JButton("Calculation");
-                  ActionListener calListener = new ActionListener() //call the frame to show calculation for each scheduling algorithms
+                  ActionListener calListener = new ActionListener() //call the frame to show calculation for each LifeAlign algorithms
                   {
                       public void actionPerformed(ActionEvent cal)
                       {
                           JFrame frame4 = new JFrame("Calculation");
                           JPanel calGridPanel = new JPanel(new GridLayout(3,0,5,5));
-                          JTextArea calresult1 = new JTextArea("1.Non Preemptive Priority Scheduling Total Turnaround Time:" + priorityTotalTurn + "\n" +"2.Non Preemptive Priority Scheduling Average Turnaround Time:" + priorityAVGTurn + "\n" + "3.Non Preemptive Priority Scheduling Total Waiting Time:" + priorityTotalWait + "\n" + "4.Non Preemptive Priority Scheduling Average Waiting Time:" + priorityAVGWait + "\n" + "5.Each Process Turnaround time:" + eachProcessTurn + "\n" + "6.Each Process Waiting Time:" + eachProcessWait + "\n");
+                          JTextArea calresult1 = new JTextArea("1.Non Preemptive Priority LifeAlign Total Turnaround Time:" + priorityTotalTurn + "\n" +"2.Non Preemptive Priority LifeAlign Average Turnaround Time:" + priorityAVGTurn + "\n" + "3.Non Preemptive Priority LifeAlign Total Waiting Time:" + priorityTotalWait + "\n" + "4.Non Preemptive Priority LifeAlign Average Waiting Time:" + priorityAVGWait + "\n" + "5.Each Process Turnaround time:" + eachProcessTurn + "\n" + "6.Each Process Waiting Time:" + eachProcessWait + "\n");
                            calGridPanel.add(calresult1);
                          frame4.add(calGridPanel);
                           frame4.setSize(1000,1000);
@@ -180,9 +165,9 @@ class Scheduling extends JFrame
                       }
                   };
                   calculate.addActionListener(calListener);
-                  JLabel text = new JLabel("Non Preemptive Priority Scheduling");
-                  JLabel text2 = new JLabel("Premptive SJF Scheduling");
-                  JLabel text3 = new JLabel("Non Premptive SJF Scheduling");
+                  JLabel text = new JLabel("Non Preemptive Priority LifeAlign");
+                  JLabel text2 = new JLabel("Premptive SJF LifeAlign");
+                  JLabel text3 = new JLabel("Non Premptive SJF LifeAlign");
                   board.add(text,"North");
                   board.add(ganttChart1,"Center");
                   board2.add(text2,"North");
@@ -294,10 +279,10 @@ class Scheduling extends JFrame
   /**
    * Calculate total turnaround time
    */
-  public int getSumTurn(ArrayList<Scheduling> result1)  
+  public int getSumTurn(ArrayList<LifeAlign> result1)  
   {
      int sumTurnaround=0;
-     for(Scheduling i: result1) 
+     for(LifeAlign i: result1) 
      {
         sumTurnaround += i.getTurnaround();
      }     
@@ -308,10 +293,10 @@ class Scheduling extends JFrame
    * Calculate total waiting time
    * 
    */
-  public int getSumWait(ArrayList<Scheduling> result2) 
+  public int getSumWait(ArrayList<LifeAlign> result2) 
   {
      int sumWaiting=0;
-     for(Scheduling i: result2) 
+     for(LifeAlign i: result2) 
      {
         sumWaiting += i.getWaiting();
      }  
@@ -322,7 +307,7 @@ class Scheduling extends JFrame
    * Calculate average turnaround time
    * 
    */
-  public float getAvgTurn(ArrayList<Scheduling> result3, int num) 
+  public float getAvgTurn(ArrayList<LifeAlign> result3, int num) 
   {
       float sumT = getSumTurn(result3);
       float sumW = getSumWait(result3);
@@ -334,7 +319,7 @@ class Scheduling extends JFrame
    * 
    * Calculate average waiting time
    */
-  public float getAvgWait(ArrayList<Scheduling> result4, int num) 
+  public float getAvgWait(ArrayList<LifeAlign> result4, int num) 
   {
       float sumW = getSumWait(result4);
       float avgWait = sumW/num;
@@ -342,20 +327,20 @@ class Scheduling extends JFrame
   }
   
   /**
-   * Get non premptive priority scheduling result
+   * Get non premptive priority LifeAlign result
    * 
    * parameter:
    * totalProcess == number of process user want
    * initialProcess == input that user enter for each process
    */
-  public ArrayList<Scheduling> getPriority(int totalProcess, ArrayList<Scheduling> initialProcess) 
+  public ArrayList<LifeAlign> getPriority(int totalProcess, ArrayList<LifeAlign> initialProcess) 
   {
-      ArrayList<Scheduling> newProcess = new ArrayList<Scheduling>();
-      ArrayList<Scheduling> checkProcess = new ArrayList<Scheduling>();
-      ArrayList<Scheduling> oldProcess = new ArrayList<Scheduling>();
+      ArrayList<LifeAlign> newProcess = new ArrayList<LifeAlign>();
+      ArrayList<LifeAlign> checkProcess = new ArrayList<LifeAlign>();
+      ArrayList<LifeAlign> oldProcess = new ArrayList<LifeAlign>();
       oldProcess = initialProcess;
       int processNum = totalProcess;
-      Scheduling temp;
+      LifeAlign temp;
       
       for(int i=0; i<processNum; i++) //to find which process is the first process
      {
@@ -411,7 +396,7 @@ class Scheduling extends JFrame
          {
              if(oldProcess.get(b).getArriveTime()<timer) 
              {
-                 checkProcess.add(oldProcess.get(b)); //put arrived process in checkProcess for further scheduling
+                 checkProcess.add(oldProcess.get(b)); //put arrived process in checkProcess for further LifeAlign
              }
              else
              {
@@ -428,7 +413,7 @@ class Scheduling extends JFrame
              }
          }
          
-         //scheduling further process
+         //LifeAlign further process
          for(int c=0; c<checkProcess.size();c++)
          {
              for(int d=0; d<checkProcess.size()-1-c;d++)
@@ -451,8 +436,8 @@ class Scheduling extends JFrame
                  }
              }
          }
-         newProcess.add(checkProcess.get(0));  //put finished scheduling process 
-         oldProcess.remove(checkProcess.get(0)); //remove process that finished scheduling
+         newProcess.add(checkProcess.get(0));  //put finished LifeAlign process 
+         oldProcess.remove(checkProcess.get(0)); //remove process that finished LifeAlign
          timer = timer + checkProcess.get(0).getBurstTime();
          newProcess.get(index).setFinishTime(timer);
          checkProcess.clear(); 
@@ -460,7 +445,7 @@ class Scheduling extends JFrame
      }
       
      index = 0; 
-     for(Scheduling i: newProcess) //find each process turnaround time,waiting time 
+     for(LifeAlign i: newProcess) //find each process turnaround time,waiting time 
      {
         i.setTurnaround((i.getFinishTime() - i.getArriveTime()));
         i.setWaiting(i.getTurnaround()-i.getBurstTime());
@@ -472,19 +457,19 @@ class Scheduling extends JFrame
   
   
    /**
-   * Get non premptive SJF scheduling result
+   * Get non premptive SJF LifeAlign result
    * 
    * parameter:
    * totalProcess == number of process user want
    * initialProcess == input that user enter for each process
    */
-  public ArrayList<Scheduling> getNonSJF(int totalProcess, ArrayList<Scheduling>initialProcess2) 
+  public ArrayList<LifeAlign> getNonSJF(int totalProcess, ArrayList<LifeAlign>initialProcess2) 
   {
       int processNum = totalProcess;
       int process_arrive_Time;
       int process_burst_Time;
-      ArrayList<Scheduling> process = new ArrayList<Scheduling>(); // process without scheduling
-      ArrayList<Scheduling> temp = new ArrayList<Scheduling>(); // final arragement of process after scheduling(result)
+      ArrayList<LifeAlign> process = new ArrayList<LifeAlign>(); // process without LifeAlign
+      ArrayList<LifeAlign> temp = new ArrayList<LifeAlign>(); // final arragement of process after LifeAlign(result)
       process = initialProcess2;
       int st=0, tot=0; // st means service time and tot means determine how many process has completed
       float totalwt=0, totalta=0;
@@ -520,19 +505,19 @@ class Scheduling extends JFrame
   }
   
    /**
-   * Get premptive SJF scheduling result
+   * Get premptive SJF LifeAlign result
    * 
    * parameter:
    * totalProcess == number of process user want
    * initialProcess == input that user enter for each process
    */
-  public ArrayList<Scheduling> getPSJF(int totalProcess, ArrayList<Scheduling> initialProcess3) 
+  public ArrayList<LifeAlign> getPSJF(int totalProcess, ArrayList<LifeAlign> initialProcess3) 
   {
       int processNum;
       int process_arrive_Time;
       int process_burst_Time;
-      ArrayList<Scheduling> process = new ArrayList<Scheduling>(); // process without scheduling
-      ArrayList<Scheduling> temp2 = new ArrayList<Scheduling>(); // final arragement of process after scheduling(result)
+      ArrayList<LifeAlign> process = new ArrayList<LifeAlign>(); // process without LifeAlign
+      ArrayList<LifeAlign> temp2 = new ArrayList<LifeAlign>(); // final arragement of process after LifeAlign(result)
       process = initialProcess3;
       processNum = totalProcess;
       int st=0, tot=0; // st means service time and tot means determine how many process has completed
@@ -542,7 +527,7 @@ class Scheduling extends JFrame
       int j = processNum;
       int index=0;
       boolean isrun = false; // flag that turn true when any process is successfully running
-      for(Scheduling i: process)
+      for(LifeAlign i: process)
       {
           burst_Time_temp[index] = i.getBurstTime();
           index++;
@@ -593,7 +578,7 @@ class Scheduling extends JFrame
                 if(c!=store_c && process.get(store_c).getBurstTime()!=0 && isrun == true)
                 {
                     int k = store_c + 1;
-                    process.add(new Scheduling("P" + k,process.get(store_c).getArriveTime(),process.get(store_c).getBurstTime(),0,false));
+                    process.add(new LifeAlign("P" + k,process.get(store_c).getArriveTime(),process.get(store_c).getBurstTime(),0,false));
                     process.get(j).setFinishTime(st);
                     temp2.add(process.get(j));
                     j = j + 1;
@@ -627,6 +612,6 @@ class Scheduling extends JFrame
    */
   public static void main(String args[])
   {
-      new Scheduling();
+      new LifeAlign();
   }
 }
