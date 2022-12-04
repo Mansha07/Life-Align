@@ -2,7 +2,6 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JLabel;
 
 class LifeAlign extends JFrame
 {
@@ -120,7 +119,7 @@ class LifeAlign extends JFrame
                   
                   HashMap<String,String> eachProcessTurn = new HashMap<String,String>(); 
                   HashMap<String,String> eachProcessWait = new HashMap<String,String>();
-                  for(LifeAlign xx: priorityResult) //Store Waiting time and turnaround time of each process(non premptive priority) 
+                  for(LifeAlign xx: priorityResult) // Store Waiting time and turnaround time of each process(non premptive priority) 
                   {
                       eachProcessTurn.put(xx.getIdentity(),String.valueOf(xx.getTurnaround()));
                       eachProcessWait.put(xx.getIdentity(),String.valueOf(xx.getWaiting()));
@@ -151,8 +150,6 @@ class LifeAlign extends JFrame
                  
                   JPanel gridBoard = new JPanel(new GridLayout(3,0,5,5));
                   JPanel board = new JPanel(new BorderLayout());
-                  JPanel board2 = new JPanel(new BorderLayout());
-                  JPanel board3 = new JPanel(new BorderLayout());
                   JButton calculate = new JButton("Calculation");
                   ActionListener calListener = new ActionListener() //call the frame to show calculation for each LifeAlign algorithms
                   {
@@ -169,20 +166,11 @@ class LifeAlign extends JFrame
                   };
                   calculate.addActionListener(calListener);
                   JLabel text = new JLabel("Non Preemptive Priority LifeAlign");
-                  JLabel text2 = new JLabel("Premptive SJF LifeAlign");
-                  JLabel text3 = new JLabel("Non Premptive SJF LifeAlign");
                   board.add(text,"North");
                   board.add(ganttChart1,"Center");
-                  board2.add(text2,"North");
-                 
-                  board3.add(text3,"North");
-                 
-                  board3.add(calculate,"South");
                   gridBoard.add(board);
-                  gridBoard.add(board2);
-                  gridBoard.add(board3);
                   frame3.add(gridBoard);
-                  frame3.setSize(1000,1000);
+                  frame3.setSize(500,500);
                   frame3.setVisible(true);
               }
           };
@@ -278,10 +266,7 @@ class LifeAlign extends JFrame
   {
       return finishTime;
   }
-
-  /**
-   * Calculate total turnaround time
-   */
+  
   public int getSumTurn(ArrayList<LifeAlign> result1)  
   {
      int sumTurnaround=0;
