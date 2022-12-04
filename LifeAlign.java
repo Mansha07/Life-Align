@@ -2,17 +2,18 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.JLabel;
 
 class LifeAlign extends JFrame
 {
-  private int arriveTime;  
+  private int arriveTime;
   private int burstTime;
   private int priority;
-  private String identity; //process number(eg. P1)
-  private int turnaround;
+  private String identity; // process number(eg. P1)
+  private int turnaround; // time taken to submit and completion of our operation
   private int waiting;
-  private int finishTime;  //process finish scheduling time
-  private boolean status;  //to know that process been scheduling already or not
+  private int finishTime;  // process finish scheduling time
+  private boolean status;  // to know that process been scheduling already or not
    
   public LifeAlign(String input1,int input2, int input3, int input4, boolean input5 )
   {
@@ -25,22 +26,22 @@ class LifeAlign extends JFrame
 
   public LifeAlign()
   {
-     JFrame frame = new JFrame("Operating System Assignment");
+     JFrame frame = new JFrame("LifeAlign");
      String[] choice = {"3","4","5","6","7","8","9","10"};
      JComboBox<String> combo = new JComboBox<String>(choice);
      JPanel panel = new JPanel();
-     JLabel label = new JLabel("Please select how many process you want:");
-     ActionListener cbActionListener = new ActionListener() // after user choose how many process he/she want, let user insert input
+     JLabel label = new JLabel("Select amount of Tasks that you want to do");
+     ActionListener ActionListener = new ActionListener() // after user choose how many process he/she want, let user insert input
      {
          public void actionPerformed(ActionEvent e)
          {
           int index=1;
-          JFrame frame2 = new JFrame("Table");
+          JFrame frame2 = new JFrame("Kindly, enter the required data");
           JPanel panel2 = new JPanel();
           String item = (String)combo.getSelectedItem();
           int number = Integer.parseInt(item)+1;
           JTable table = new JTable(number,4);
-          JButton btn = new JButton("Next");
+          JButton btn = new JButton("\"LifeAlign\"");
           table.setValueAt("Task To Be Completed",0,0);
           table.setValueAt("Starting Time",0,1);
           table.setValueAt("Total Time taken",0,2);
@@ -192,7 +193,7 @@ class LifeAlign extends JFrame
           frame2.setResizable(false);
          }
      };
-     combo.addActionListener(cbActionListener);
+     combo.addActionListener(ActionListener);
      panel.add(combo);
      panel.add(label);
      frame.add(panel);
