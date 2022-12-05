@@ -30,6 +30,7 @@ class LifeAlign extends JFrame
      JComboBox<String> combo = new JComboBox<String>(choice);
      JPanel panel = new JPanel();
      JLabel label = new JLabel("Select amount of Tasks that you want to do");
+
      ActionListener ActionListener = new ActionListener() // after user choose how many process he/she want, let user insert input
      {
          public void actionPerformed(ActionEvent e)
@@ -430,8 +431,8 @@ class LifeAlign extends JFrame
 
      return newProcess;
   }
-  
-  public static void main(String args[])
+
+public static void main(String args[])
   {
       new LifeAlign();
   }
