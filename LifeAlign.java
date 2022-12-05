@@ -52,7 +52,7 @@ class LifeAlign extends JFrame
               table.setValueAt(0,i,3); // set 0 for each cell of priority
               index++;
           }
-      
+
           ActionListener btnActionListener = new ActionListener() // start LifeAlign after user click "LifeAlign" button
           {
               public void actionPerformed(ActionEvent e)
