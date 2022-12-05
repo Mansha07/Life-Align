@@ -1,5 +1,7 @@
 import java.util.*;
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -36,12 +38,12 @@ class LifeAlign extends JFrame
          public void actionPerformed(ActionEvent e)
          {
           int index=1;
-          JFrame frame2 = new JFrame("Kindly, enter the required data");
+          JFrame frame2 = new JFrame("Kindly, enter your hectic routine to be simplified");
           JPanel panel2 = new JPanel();
           String item = (String)combo.getSelectedItem();
           int number = Integer.parseInt(item)+1;
           JTable table = new JTable(number,4);
-          JButton btn = new JButton("\"LifeAlign\"");
+          JButton btn = new JButton("Compute");
           table.setValueAt("Enter Tasks",0,0);
           table.setValueAt("Start Time",0,1);
           table.setValueAt("Duration",0,2);
@@ -49,7 +51,7 @@ class LifeAlign extends JFrame
 
           for(int i=1; i<number; i++)
           {
-              table.setValueAt("P"+index,i,0); // set each process initial identity(process number)
+              table.setValueAt(index,i,0); // set each process initial identity(process number)
               table.setValueAt(0,i,3); // set 0 for each cell of priority
               index++;
           }
@@ -64,7 +66,7 @@ class LifeAlign extends JFrame
                   ArrayList<LifeAlign> priorityResult = new ArrayList<LifeAlign>();
                   for(int i=1; i<number; i++) //Retrieve each value in the table and put into arrayList<LifeAlign>
                   {
-                     String id = (String)table.getValueAt(i,0);
+                     String task = (String)table.getValueAt(i,0);
                      Object l = table.getValueAt(i,1);
                      Object k = table.getValueAt(i,2);
                      Object j = table.getValueAt(i,3);
@@ -72,14 +74,14 @@ class LifeAlign extends JFrame
                      int at = Integer.parseInt(l.toString());
                      int bt = Integer.parseInt(k.toString());
                      int pt = Integer.parseInt(j.toString());
-                     initialProcess.add(new LifeAlign(id,at,bt,pt,false));
-                     initialProcess2.add(new LifeAlign(id,at,bt,pt,false));
-                     initialProcess3.add(new LifeAlign(id,at,bt,pt,false));
+                     initialProcess.add(new LifeAlign(task,at,bt,pt,false));
+                     initialProcess2.add(new LifeAlign(task,at,bt,pt,false));
+                     initialProcess3.add(new LifeAlign(task,at,bt,pt,false));
                     }catch(NullPointerException ext)  //if user enter null value, throw the error
                     {
                         JDialog dialog = new JDialog(frame2,"Error!");
                         JPanel errorPanel = new JPanel();
-                        JLabel errorMessage = new JLabel("No Input, please check again");
+                        JLabel errorMessage = new JLabel("No data entered, please check again");
                         errorPanel.add(errorMessage);
                         dialog.add(errorPanel);
                         dialog.setSize(350,100);
@@ -90,11 +92,11 @@ class LifeAlign extends JFrame
                   }
 
                   priorityResult = getPriority(number-1,initialProcess); // call the function to calculate non preemptive priority scheduling
-                  JFrame frame3 = new JFrame("Result");      
+                  JFrame frame3 = new JFrame("Here is your life aligned");      
                   JTable ganttChart1 = new JTable(2,priorityResult.size()+1);   // create table for show result after scheduling
                   int rol=0;
                   int col=0;
-                  for(int i=0; i<priorityResult.size(); i++) //loop to set the values of each cells in gantt chart(priority and non SJF)
+                  for(int i=0; i<priorityResult.size(); i++) //loop to set the values of each cells in gantt chart(priority)
                   {
                       ganttChart1.setValueAt(priorityResult.get(i).getIdentity(),rol,col);  // set process number according arrangement
                       //set each process's start time and finish time
@@ -156,7 +158,7 @@ class LifeAlign extends JFrame
                   {
                       public void actionPerformed(ActionEvent cal)
                       {
-                          JFrame frame4 = new JFrame("Calculation");
+                          JFrame frame4 = new JFrame("LifeAlign");
                           JPanel calGridPanel = new JPanel(new GridLayout(3,0,5,5));
                           JTextArea calresult1 = new JTextArea("1.Non Preemptive Priority LifeAlign Total Turnaround Time:" + priorityTotalTurn + "\n" +"2.Non Preemptive Priority LifeAlign Average Turnaround Time:" + priorityAVGTurn + "\n" + "3.Non Preemptive Priority LifeAlign Total Waiting Time:" + priorityTotalWait + "\n" + "4.Non Preemptive Priority LifeAlign Average Waiting Time:" + priorityAVGWait + "\n" + "5.Each Process Turnaround time:" + eachProcessTurn + "\n" + "6.Each Process Waiting Time:" + eachProcessWait + "\n");
                           calGridPanel.add(calresult1);
@@ -167,7 +169,7 @@ class LifeAlign extends JFrame
                   };
                   calculate.addActionListener(calListener);
                   JLabel text = new JLabel("Non Preemptive Priority LifeAlign");
-                  board.add(text,"North");
+                  board.add(text,"Center");
                   board.add(ganttChart1,"Center");
                   gridBoard.add(board);
                   frame3.add(gridBoard);
@@ -304,9 +306,7 @@ class LifeAlign extends JFrame
   }
   
   /**
-   * Get non premptive priority LifeAlign result
-   * 
-   * parameter:
+     Non premptive priority LifeAlign result
    * totalProcess == number of process user want
    * initialProcess == input that user enter for each process
    */
