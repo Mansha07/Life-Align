@@ -158,8 +158,8 @@ class LifeAlign extends JFrame
                           JFrame frame4 = new JFrame("Calculation");
                           JPanel calGridPanel = new JPanel(new GridLayout(3,0,5,5));
                           JTextArea calresult1 = new JTextArea("1.Non Preemptive Priority LifeAlign Total Turnaround Time:" + priorityTotalTurn + "\n" +"2.Non Preemptive Priority LifeAlign Average Turnaround Time:" + priorityAVGTurn + "\n" + "3.Non Preemptive Priority LifeAlign Total Waiting Time:" + priorityTotalWait + "\n" + "4.Non Preemptive Priority LifeAlign Average Waiting Time:" + priorityAVGWait + "\n" + "5.Each Process Turnaround time:" + eachProcessTurn + "\n" + "6.Each Process Waiting Time:" + eachProcessWait + "\n");
-                           calGridPanel.add(calresult1);
-                         frame4.add(calGridPanel);
+                          calGridPanel.add(calresult1);
+                          frame4.add(calGridPanel);
                           frame4.setSize(1000,1000);
                           frame4.setVisible(true);
                       }
@@ -170,7 +170,7 @@ class LifeAlign extends JFrame
                   board.add(ganttChart1,"Center");
                   gridBoard.add(board);
                   frame3.add(gridBoard);
-                  frame3.setSize(500,500);
+                  frame3.setSize(500,250);
                   frame3.setVisible(true);
               }
           };
